@@ -1,0 +1,8 @@
+
+#toastContainer {
+    position: fixed; 
+    top: 5px; 
+    right: 5px; 
+    min-height: 200px; 
+}
+

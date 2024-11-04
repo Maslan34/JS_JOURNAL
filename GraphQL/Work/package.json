@@ -1,0 +1,25 @@
+{
+  "name": "workgraphgl",
+  "version": "1.0.0",
+  "description": "work GraphGL",
+  "main": "work.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "work": "nodemon main.js"
+  },
+  "keywords": [
+    "GraphGL"
+  ],
+  "author": "muharrem aslan",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.11.8",
+    "@apollo/server": "^4.11.2",
+    "apollo-server-core": "^3.13.0",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
+    "nanoid": "^5.0.8",
+    "nodemon": "^3.1.7"
+  }
+}

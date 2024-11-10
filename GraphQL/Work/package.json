@@ -18,8 +18,11 @@
     "@apollo/server": "^4.11.2",
     "apollo-server-core": "^3.13.0",
     "graphql": "^16.9.0",
+    "graphql-subscriptions": "^2.0.0",
     "graphql-tag": "^2.12.6",
+    "graphql-ws": "^5.16.0",
     "nanoid": "^5.0.8",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "ws": "^8.18.0"
   }
 }

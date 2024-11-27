@@ -1,0 +1,13 @@
+.container {
+
+height: 100vh;
+}
+.test {
+  background-color: #f0f0f0;
+  padding: 24px;
+  margin: 24px;
+  border: 2px solid bisque;
+}
+.showCommentsButtonContainer{
+  text-align: center;
+}

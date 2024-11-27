@@ -19,7 +19,26 @@ const pubsub = new PubSub();
 const app = express();
 const httpServer = http.createServer(app);
 
-// Subsriciption
+
+// ISTEKLER ICIN CORS ISLEMI 
+
+import  cors from 'cors';
+
+// Tüm kaynaklara izin vermek için:
+app.use(cors());
+
+// Sadece belirli bir kaynağa izin vermek için:
+app.use(
+  cors({
+    origin: 'http://localhost:4002', // İzin verilen origin
+    methods: 'GET,POST', // İzin verilen HTTP metodları
+    credentials: true,   // Credential içeren istekler için
+  })
+);
+
+// ISTEKLER ICIN CORS ISLEMI 
+
+
 
 // PATH FİLE İŞLEMLERİ İÇİN GEREKLİ
 import path from "path";

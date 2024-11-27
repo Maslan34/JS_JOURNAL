@@ -1,0 +1,109 @@
+type deleteCount {
+    count: Int
+  }
+
+  input locationInput {
+    name: String
+    desc: String
+    lat: Float
+    lng: Float
+  }
+
+  input eventInput {
+    title: String
+    desc: String
+    date: String
+    from: String
+    to: String
+    location_id: Int
+    user_id: Int
+  }
+
+  type Event {
+    id: ID!
+    title: String!
+    desc: String
+    date: String!
+    from: String!
+    to: String!
+    location_id: Int!
+    user_id: Int!
+    user: User # Event and User Relationship
+    location: Location # Event and Location Relationship
+    participants: [Participant] # Event and Participant Relationship
+  }
+
+  type Location {
+    id: ID!
+    name: String!
+    desc: String!
+    lat: Float!
+    lng: Float!
+  }
+
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    events: [Event] # User and Event Relationship
+  }
+
+  type Participant {
+    id: ID!
+    user_id: Int!
+    event_id: Int!
+  }
+
+  type Query {
+    getAllUsers: [User]
+    getAllLocations: [Location]
+    getAllParticipants: [Participant]
+    getAllEvents: [Event]
+
+    getUser(id: ID): User
+    getLocation(id: ID): Location
+    getParticipant(id: ID): Participant
+    getEvent(id: ID): Event
+  }
+
+  type Mutation {
+    #Location
+    addLocation(name: String, desc: String, lat: Float, lng: Float): Location
+    updateLocation(id: ID, data: locationInput): Location
+    deleteLocation(id: ID): Location
+    deleteAllLocations: deleteCount
+
+    #Participant
+    addParticipant(user_id: Int, event_id: Int): Participant
+    updateParticipant(id: ID, user_id: Int, event_id: Int): Participant
+    deleteParticipant(id: ID): Participant
+    deleteAllParticipants: deleteCount
+
+    #Event
+    addEvent(
+      title: String
+      desc: String
+      date: String
+      from: String
+      to: String
+      location_id: Int
+      user_id: Int
+    ): Event
+    updateEvent(id: ID, data: eventInput): Event
+    deleteEvent(id: ID): Event
+    deleteAllEvents: deleteCount
+
+    #User
+    addUser(username: String, email: String): User
+    updateUser(id: ID, username: String, email: String): User
+    deleteUser(id: ID): User
+    deleteAllUsers: deleteCount
+  }
+
+  # Subscription
+
+  type Subscription {
+    userCreated: User!
+    eventCreated: Event!
+    participantAdded: Participant
+  }

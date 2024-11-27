@@ -5,8 +5,8 @@
   "main": "work.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "work": "nodemon main.js"
+    "start": "node main.js",
+    "dev": "nodemon ./src/main.js"
   },
   "keywords": [
     "GraphGL"

@@ -1,5 +1,4 @@
-import { PubSub } from 'graphql-subscriptions'; 
-const pubsub = new PubSub();
+import { pubsub } from '../../pubsub.js';
 export const Subscription =
   // Subscription
 
@@ -12,6 +11,9 @@ export const Subscription =
     },
     participantAdded: {
       subscribe: () => pubsub.asyncIterator("participantAdded"),
+    },
+    eventCount: {
+      subscribe: () => pubsub.asyncIterator(["eventsCount"]),
     },
   };
 

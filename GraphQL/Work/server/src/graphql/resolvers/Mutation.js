@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid";
 import data from "../../data.json" assert { type: "json" };
 
-import { PubSub } from 'graphql-subscriptions'; 
-const pubsub = new PubSub();
+import { pubsub } from '../../pubsub.js';
 
 let events = data.events;
 let users = data.users;
@@ -76,13 +75,25 @@ export const Mutation = {
     //Participant
 
     addParticipant: (parent, args) => {
+      console.log(args)
+      const user_id =nanoid()
+      const User = {
+        id:user_id ,
+        username: args.username,
+        email: args.email,
+      };
+      
       const Participant = {
         id: nanoid(),
-        user_id: args.user_id,
+        user_id: user_id,
         event_id: args.event_id,
       };
+      
+  
       pubsub.publish("participantAdded", { participantAdded: Participant });
+      pubsub.publish("userCreated", { userCreated: User });
       participants.push(Participant);
+      users.push(User);
 
       return Participant;
     },
@@ -202,8 +213,11 @@ export const Mutation = {
         location_id: args.location_id,
         user_id: args.user_id,
       };
-      pubsub.publish("eventCreated", { eventCreated: Event });
+      
       events.push(Event);
+      pubsub.publish("eventCreated", { eventCreated: Event });
+      pubsub.publish("eventsCount", { eventCount: events.length });
+
 
       return Event;
     },

@@ -1,6 +1,5 @@
 import data from "../../data.json" assert { type: "json" };
-import { PubSub } from 'graphql-subscriptions'; 
-const pubsub = new PubSub();
+
 
 let events = data.events;
 let users = data.users;
@@ -14,17 +13,18 @@ export const Query = {
   getAllEvents: () => events,
 
   getUser: (parent, args) => {
-    return users.find((user) => user.id === Number(args.id));
+    return users.find((user) => user.id == (args.id));
   },
   getLocation: (parent, args) => {
-    return locations.find((location) => location.id === Number(args.id));
+    return locations.find((location) => location.id == (args.id));
   },
   getParticipant: (parent, args) => {
     return participants.find(
-      (participant) => participant.id === Number(args.id)
+      (participant) => participant.id == (args.id)
     );
   },
   getEvent: (parent, args) => {
-    return events.find((event) => event.id === Number(args.id));
+    console.log(args)
+    return events.find((event) => event.id == (args.id));
   },
 };

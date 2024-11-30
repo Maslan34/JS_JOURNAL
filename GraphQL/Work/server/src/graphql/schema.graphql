@@ -52,6 +52,7 @@ type deleteCount {
     id: ID!
     user_id: Int!
     event_id: Int!
+    user:User
   }
 
   type Query {
@@ -74,7 +75,7 @@ type deleteCount {
     deleteAllLocations: deleteCount
 
     #Participant
-    addParticipant(user_id: Int, event_id: Int): Participant
+    addParticipant(username: String, email: String, event_id: Int): Participant
     updateParticipant(id: ID, user_id: Int, event_id: Int): Participant
     deleteParticipant(id: ID): Participant
     deleteAllParticipants: deleteCount
@@ -106,4 +107,5 @@ type deleteCount {
     userCreated: User!
     eventCreated: Event!
     participantAdded: Participant
+    eventCount: Int!
   }

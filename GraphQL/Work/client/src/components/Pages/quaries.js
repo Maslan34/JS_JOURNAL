@@ -62,22 +62,62 @@ query BookQuerySinlge($bookQuerySinlgeId: ID!) {
 `;
 
 export const GET_EXTRA_EVENT_INFO = gql`
-query getEvent($getEventId: ID){
-  getEvent(id: $getEventId){
+query GetEvent($getEventId: ID) {
+  getEvent(id: $getEventId) {
+    user {
+      username
+      email
+    }
+    user_id
     location {
       name
+      desc
       lat
       lng
     }
-    from
-    to
+    participants {
+      id
+      user {
+        id
+        username
+        email
+      }
+    }
   }
 }
 `;
 
-export const AUTHOR_SUBSCRIPTION = gql`
+export const EVENT_SUBSCRIPTION = gql`
 
-subscription Subscription {
-  authorAdded
+subscription EventCreated {
+  eventCreated {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+  }
 }
 `;
+
+export const EVENT_COUNT = gql`
+subscription Subscription {
+  eventCount
+}
+`;
+
+export const PARTICIPANT_SUBSCRIPTION = gql`
+subscription ParticipantAdded {
+  participantAdded {
+    id
+    event_id
+    user {
+      email
+      username
+    }
+  }
+}
+`;
+

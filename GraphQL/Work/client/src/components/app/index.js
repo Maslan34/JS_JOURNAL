@@ -14,6 +14,8 @@ import Home from '../Pages/Home';
 import HeaderMenu from './Headermenu';
 import NewEvent from '../Pages/NewEvent';
 import EventPage from '../Pages/EventPage';
+import PostCounter from '../PostCounter/';
+
 
 
 function App() {
@@ -21,7 +23,13 @@ function App() {
     <div className={styles.container}>
       <Row justify={'center'}>
         <Col span={14} className={styles.test}>
-        <HeaderMenu />
+        <Row justify="center">
+          <Col span={14}>
+          <HeaderMenu />
+          </Col>
+          <Col span={8}><PostCounter/> </Col>
+        </Row>
+     
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/newEvent" Component={NewEvent} />

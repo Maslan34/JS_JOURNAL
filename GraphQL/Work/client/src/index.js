@@ -11,12 +11,12 @@ import { createClient } from 'graphql-ws';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 
 
-// WebSocket link oluştur
+// CREATING WebSocket LINK
 const wsLink = new GraphQLWsLink(
   createClient({
     url: 'ws://localhost:4002/graphql',
     connectionParams: {
-      reconnect: true, // Otomatik yeniden bağlanma
+      reconnect: true, // 
     },
   })
 );
@@ -25,9 +25,6 @@ const client = new ApolloClient({
   link: wsLink,
   cache: new InMemoryCache(),
 });
-
-
-
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

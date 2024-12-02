@@ -5,93 +5,89 @@ import { useQuery } from "@apollo/client";
 import { GET_EVENTS, EVENT_SUBSCRIPTION } from "./quaries";
 
 function Home() {
-  // useQuery hook'u ile veri çekiliyor
+  // DATA IS FETCHED USING THE USEQUERY HOOK
   const { loading, error, data, subscribeToMore } = useQuery(GET_EVENTS);
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
       document: EVENT_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
-        console.log("DEBUG: `updateQuery` çalıştı.");
-        console.log("DEBUG: Gelen eski veri (prev):", prev);
+        console.log("DEBUG: updateQuery EXECUTED.");
+        console.log("DEBUG: OLD DATA RECEIVED (PREV):", prev);
 
         if (!subscriptionData.data) {
           console.log(
-            "DEBUG: subscriptionData.data yok. Eski veri döndürülüyor."
+            "DEBUG: THERE IS NO subscriptionData.data. RETURNING OLD DATA.."
           );
-          return prev; // Gelen veri yoksa eski state döndür
+          return prev; // RETURN OLD STATE IF NO DATA IS RECEIVED
         }
 
-        // Gelen veriyi al ve logla
+        // RECEIVE THE DATA AND LOGGING HERE
         const newEvent = subscriptionData.data.eventCreated;
-        console.log("DEBUG: Gelen yeni event verisi (newEvent):", newEvent);
+        console.log(" DEBUG: NEW EVENT DATA RECEIVED (NEWEVENT):", newEvent);
 
-        // Önce eski array'i kontrol edelim
         if (!Array.isArray(prev.getAllEvents)) {
           console.error(
-            "HATA: prev.getAllEvents array değil, mevcut yapı:",
+            "ERROR: prev.getAllEvents IS NOT AN ARRAY:",
             prev.getAllEvents
           );
           return prev;
         }
 
-        // Gelen yeni event'in ID'sinin zaten mevcut olup olmadığını kontrol edin
+        // CHECK IF THE ID OF THE NEW EVENT ALREADY EXISTS
         const isDuplicate = prev.getAllEvents.some(
           (event) => event.id === newEvent.id
         );
 
         if (isDuplicate) {
           console.warn(
-            "UYARI: Gelen event zaten mevcut. Ekleme yapılmadı. ID:",
+            "WARNING: THE EVENT ALREADY EXISTS. NO ADDITION MADE. ID:",
             newEvent.id
           );
-          return prev; // Duplicate varsa ekleme yapmıyoruz
+          return prev;
         }
 
-        // Yeni veriyle eski veriyi birleştiriyoruz
+        // MERGE OLD DATA WITH NEW DATA
         const updatedData = {
           ...prev,
           getAllEvents: [newEvent, ...prev.getAllEvents],
         };
 
-        console.log("DEBUG: Güncellenmiş veri (updatedData):", updatedData);
+        console.log("DEBUG: UPDATED DATA :", updatedData);
 
         return updatedData;
       },
     });
-    return () => unsubscribe(); // Cleanup için aboneliği kaldır
+    return () => unsubscribe(); // REMOVE SUBSCRIPTION FOR CLEANUP
   }, [subscribeToMore]);
 
-  // Eğer veri yükleniyorsa 'Loading' mesajı göster
   if (loading) return <div>Loading...</div>;
 
-  // Eğer bir hata oluşursa hata mesajı göster
   if (error) return <div>Error: {error.message}</div>;
+  console.log("Homedan Gelen Veri:");
+  console.log(data);
 
-  console.log(data); // Veriyi kontrol etmek için
-
-  // Eğer veri varsa, List'i render et
   return (
     <div>
       <h1>Home</h1>
       <List
         className="demo-loadmore-list"
-        loading={loading} // Loading durumunu burada kontrol edebilirsiniz
+        loading={loading}
         itemLayout="horizontal"
-        dataSource={data.getAllEvents} // ARRAY GEREKİR
+        dataSource={data.getAllEvents} // NEEDS ARRAY HERE
         renderItem={(item) => (
           <List.Item>
             <Skeleton avatar title={false} loading={loading} active>
               <List.Item.Meta
                 avatar={
                   <Avatar src="https://randomuser.me/api/portraits/men/1.jpg" />
-                } // Avatar için örnek bir URL
+                }
                 title={
                   <Link to={`/event/${item.id}`}>
                     Name: {item.title} - Date: {item.date}{" "}
                   </Link>
                 }
-                description={item.desc} // Yazarın açıklaması
+                description={item.desc}
               />
             </Skeleton>
           </List.Item>

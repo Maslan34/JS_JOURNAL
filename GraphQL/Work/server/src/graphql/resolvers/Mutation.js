@@ -214,7 +214,7 @@ export const Mutation = {
         user_id: args.user_id,
       };
       
-      events.push(Event);
+      events.unshift(Event);
       pubsub.publish("eventCreated", { eventCreated: Event });
       pubsub.publish("eventsCount", { eventCount: events.length });
 
@@ -243,7 +243,8 @@ export const Mutation = {
       else {
         const deletedEvent = events[event_index];
         events.splice(event_index, 1);
-
+        pubsub.publish("eventDeleted", { eventDeleted: deletedEvent });
+        pubsub.publish("eventsCount", { eventCount: events.length });
         return deletedEvent;
       }
     },

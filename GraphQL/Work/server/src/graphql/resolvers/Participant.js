@@ -1,5 +1,5 @@
 import data from "../../data.json" assert { type: "json" };
-const users = data.users; // users listesini tanımlayın
+const users = data.users; 
 
 export const Participant = {
     user: (parent, args) => {

@@ -9,6 +9,9 @@ export const Subscription =
     eventCreated: {
       subscribe: () => pubsub.asyncIterator("eventCreated"),
     },
+    eventDeleted: {
+      subscribe: () => pubsub.asyncIterator("eventDeleted"),
+    },
     participantAdded: {
       subscribe: () => pubsub.asyncIterator("participantAdded"),
     },

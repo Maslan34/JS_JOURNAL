@@ -20,35 +20,37 @@ const app = express();
 const httpServer = http.createServer(app);
 
 
-// ISTEKLER ICIN CORS ISLEMI 
+// CORS OPERATION
 
 import  cors from 'cors';
 
-// Tüm kaynaklara izin vermek için:
+// To allow access to all resources:
+
 app.use(cors());
 
-// Sadece belirli bir kaynağa izin vermek için:
+
 app.use(
   cors({
-    origin: 'http://localhost:4002', // İzin verilen origin
-    methods: 'GET,POST', // İzin verilen HTTP metodları
-    credentials: true,   // Credential içeren istekler için
+    origin: 'http://localhost:4002', // Allowed origin
+    methods: 'GET,POST', // Allowed HTTP METHODS
+    credentials: true,   // FOR CREDENTIALS REQUESTS
   })
 );
 
-// ISTEKLER ICIN CORS ISLEMI 
+// CORS OPERATION
 
 
 
-// PATH FİLE İŞLEMLERİ İÇİN GEREKLİ
+// FOR THE PATHFILE OPERATIONS
+
 import path from "path";
 import { fileURLToPath } from "url";
 
-// __dirname işlevselliğini elde et
+// __dirname 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { readFileSync } from "fs";
 const schemaPath = path.join(__dirname, "graphql", "schema.graphql");
-var typeDefs = readFileSync(schemaPath, "utf-8"); // Dosyayı okuyoruz
+var typeDefs = readFileSync(schemaPath, "utf-8"); // Reading File
 
 // MAIN
 
@@ -70,10 +72,9 @@ const wsServerCleanup = useServer({ schema }, wsServer);
 const apolloServer = new ApolloServer({
   schema,
   plugins: [
-    // Proper shutdown for the HTTP server.
     ApolloServerPluginDrainHttpServer({ httpServer }),
 
-    // Proper shutdown for the WebSocket server.
+   
     {
       async serverWillStart() {
         return {

@@ -1,10 +1,13 @@
 import React from "react";
-import { Avatar, Button, List, Skeleton } from 'antd';
+import NewForm from "../EventForm/EventForm";
 
 function NewEvent() {
   return (
     <div>
-        <h1>newEvent</h1>
+        <h1>New Event</h1>
+        <NewForm />
+
+        
     </div>
     
     

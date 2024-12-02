@@ -1,7 +1,4 @@
 import { gql } from '@apollo/client';
-import { useLazyQuery } from '@apollo/client';
-
-// GraphQL sorgusu
 
 export const GET_EVENTS = gql`
   query getAllEvents{
@@ -88,7 +85,6 @@ query GetEvent($getEventId: ID) {
 `;
 
 export const EVENT_SUBSCRIPTION = gql`
-
 subscription EventCreated {
   eventCreated {
     id
@@ -120,4 +116,21 @@ subscription ParticipantAdded {
   }
 }
 `;
+
+
+export const EVENT_DELETE_SUBSCRIPTION = gql`
+
+subscription EventDeleted {
+  eventDeleted {
+    id
+    title
+    desc
+    date
+    from
+    to
+    location_id
+  }
+}
+`;
+
 

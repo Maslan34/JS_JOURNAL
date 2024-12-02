@@ -5,22 +5,22 @@ import { useSubscription, useQuery } from "@apollo/client";
 import { EVENT_COUNT, GET_EVENTS } from "../Pages/quaries";
 
 function PostCounter() {
-  const [eventCounter, setEventCounter] = useState(null); // Sayı başlangıçta null
+  const [eventCounter, setEventCounter] = useState(null); //  INITIAL VALUE OF THE NUMBER IS NULL
 
-  // Sayfa ilk yüklendiğinde başlangıç değeri için GET_EVENTS sorgusu
+  // USE GET_EVENTS QUERY FOR INITIAL VALUE WHEN PAGE LOADS
   const { loading: queryLoading, data: queryData } = useQuery(GET_EVENTS, {
     onCompleted: (data) => {
-      // Sorgudan gelen veriyi başlangıç değeri olarak ayarla
+      // SET DATA FROM QUERY AS INITIAL VALUE
       setEventCounter(data?.getAllEvents?.length || 0);
     },
   });
 
-  // Subscription ile veri güncellemesi
+  // UPDATE DATA WITH SUBSCRIPTION
   const { data: subscriptionData } = useSubscription(EVENT_COUNT);
 
   useEffect(() => {
     if (subscriptionData?.eventCount !== undefined) {
-      setEventCounter(subscriptionData.eventCount); // Subscription'dan gelen veriyi ayarla
+      setEventCounter(subscriptionData.eventCount); //  SET DATA FROM SUBSCRIPTION
     }
   }, [subscriptionData]);
 
@@ -29,7 +29,7 @@ function PostCounter() {
       <Badge
         count={
           queryLoading || eventCounter === null
-            ? "?" // Başlangıçta yüklenirken "?" göster
+            ? "?" // SHOW "?" WHEN LOADING INITIALLY
             : eventCounter
         }
       >

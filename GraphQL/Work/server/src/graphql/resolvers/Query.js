@@ -24,7 +24,7 @@ export const Query = {
     );
   },
   getEvent: (parent, args) => {
-    console.log(args)
+    //console.log(args)
     return events.find((event) => event.id == (args.id));
   },
 };

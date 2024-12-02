@@ -5,6 +5,7 @@ import { GET_EXTRA_EVENT_INFO, PARTICIPANT_SUBSCRIPTION } from "./quaries";
 import { useLazyQuery } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import styles from '../app/styles.module.css'
+import ParticipantForm from "../ParticipantForm/ParticipantForm";
 
 
 function MoreInfo({event_id}) {
@@ -15,24 +16,24 @@ function MoreInfo({event_id}) {
             setBtnVisible(false);
           },
     });
-    console.log(data);
-   // useQuery ile başlangıç verisini al
+    //console.log(data);
+   //  FETCH INITIAL DATA WITH USEQUERY
    const { data: eventData, loading: eventLoading, error: eventError, subscribeToMore } = useQuery(GET_EXTRA_EVENT_INFO, {
     variables: { getEventId: event_id },
 });
 
-// Participant subscription kullanarak gelen veriyi güncelle
+//  UPDATE DATA WITH PARTICIPANT SUBSCRIPTION
 useEffect(() => {
     const unsubscribe = subscribeToMore({
         document: PARTICIPANT_SUBSCRIPTION,
         updateQuery: (prev, { subscriptionData }) => {
-          console.log("Subscription Data: ", subscriptionData.data);
+          //console.log("Subscription Data: ", subscriptionData.data);
             try {
                 if (!subscriptionData || !subscriptionData.data) return prev;
 
                 const newParticipant = subscriptionData.data.participantAdded;
 
-                // Katılımcı verisini mevcut data'ya ekle
+                // ADD PARTICIPANT DATA TO CURRENT DATA
                 const updatedEventData = {
                     ...prev,
                     getEvent: {
@@ -44,17 +45,17 @@ useEffect(() => {
                     },
                 };
 
-                console.log("Güncellenmiş event verisi: ", updatedEventData);
+                //console.log("Güncellenmiş event verisi: ", updatedEventData);
 
                 return updatedEventData;
             } catch (error) {
                 console.error("Hata oluştu: ", error);
-                return prev; // Hata durumunda eski veriyi döndür
+                return prev; // RETURN OLD DATA IN CASE OF ERROR
             }
         },
     });
 
-    return () => unsubscribe(); // Cleanup için aboneliği kaldır
+    return () => unsubscribe(); // REMOVE SUBSCRIPTION FOR CLEANUP
 }, [subscribeToMore]);
      
   if (loading && !data) return <div className={styles.showCommentsButtonContainer}> <Button type="primary" loading>Loading</Button></div>;
@@ -108,7 +109,7 @@ useEffect(() => {
           />
     </div>
   )}
-     
+     <ParticipantForm/>
     </div> 
   );
 }

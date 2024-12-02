@@ -1,45 +1,43 @@
-import React, { useState } from 'react';
-import { MailOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import React, { useState } from "react";
+import { MailOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 
-import {Link,useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
-// Menü öğeleri
+// MENU ITEMS
 const menuItems = [
   {
-    label: <Link to="/">Home</Link>, // 'Navigation One' için anasayfaya yönlendirme
-    key: '/',
+    label: <Link to="/">Home</Link>,
+    key: "/",
     icon: <MailOutlined />,
   },
   {
-    label: <Link to="/newEvent">New Event</Link>, // 'Navigation One' için anasayfaya yönlendirme
-    key: '/newEvent',
+    label: <Link to="/newEvent">New Event</Link>,
+    key: "/newEvent",
     icon: <MailOutlined />,
   },
   {
-    label: <Link to="/event/:id">Go Event</Link>, // 'Navigation One' için anasayfaya yönlendirme
-    key: '/event/:id',
+    label: <Link to="/event/:id">Go Event</Link>,
+    key: "/event/:id",
     icon: <MailOutlined />,
   },
-  
 ];
 
 function CustomMenu() {
-  // Seçili menüyü tutmak için state
-  const [current, setCurrent] = useState('mail'); // Başlangıçta 'mail' seçili
+  //  STATE TO HOLD SELECTED MENU ITEM
+  const [current, setCurrent] = useState("mail");
 
-  // onClick olayını ele almak için fonksiyon
   const handleClick = (e) => {
-    console.log('click', e); // Tıklanan öğenin bilgileri konsola yazdırılır
-    setCurrent(e.key); // Seçilen menüyü güncelle
+    //console.log('click', e); //
+    setCurrent(e.key);
   };
 
   return (
     <Menu
-      onClick={handleClick} // onClick işlevi
-      selectedKeys={useLocation.pathname} // Seçili menü
-      mode="horizontal" // Menü yatayda gösterilecek
-      items={menuItems} // Menü öğeleri
+      onClick={handleClick}
+      selectedKeys={useLocation.pathname} // SELECTED MENU
+      mode="horizontal"
+      items={menuItems}
     />
   );
 }

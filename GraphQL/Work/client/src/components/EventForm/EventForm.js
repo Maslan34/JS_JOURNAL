@@ -46,6 +46,10 @@ function NewForm() {
     error: get_users_error,
     data: users,
   } = useQuery(GET_ALL_USERS);
+  //console.log("Loading durumu:")
+  //console.log(loading);
+  console.log("Gelen Kullanıcı Verileri");
+  console.log(users);
 
   const onFinish = async (values) => {
     try {

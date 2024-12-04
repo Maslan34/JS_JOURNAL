@@ -16,7 +16,8 @@ function MoreInfo({event_id}) {
             setBtnVisible(false);
           },
     });
-    //console.log(data);
+    console.log("More Info Buttonundan Gelen Data")
+    console.log(data);
    //  FETCH INITIAL DATA WITH USEQUERY
    const { data: eventData, loading: eventLoading, error: eventError, subscribeToMore } = useQuery(GET_EXTRA_EVENT_INFO, {
     variables: { getEventId: event_id },

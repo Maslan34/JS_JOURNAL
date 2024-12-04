@@ -19,7 +19,8 @@ function EventPage() {
 
   if (error) return <div>Error: {error.message}</div>;
 
-  //console.log(data); // CONTROLLING THE DATA RECEIVED
+  console.log("Gelen Kullanıcı Verileri")
+  console.log("ss"+data); // CONTROLLING THE DATA RECEIVED
 
   const Event = data.getEvent;
   return (
